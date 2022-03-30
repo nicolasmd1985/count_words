@@ -19,16 +19,18 @@ $(document).ready(function() {
   $('#search_button').click(function() {
 
     var sentence = $('#word_search').val();
+    var format = /[[\]]+/;
+
+    if (format.test(sentence) == true) {
+      sentence = sentence.replace(/[[\]]+/g , "").split(",");
+    }
+    format.test(sentence)
     if (sentence != null){
 
-      var check = sentence.split(",");
-      if (check.length == 1) {
-        check = check.toString();
-      }
       $("#show_names ul").remove();
       $.ajax({
         type: 'POST',
-        data: {sentence: check},
+        data: {sentence: sentence},
         url: '/word_count.json',
         success: (response) => {
           if (response.length > 0) {

@@ -11,11 +11,11 @@ class CountWordController < ApplicationController
     if sentence.class == Array || sentence.class == String
       if sentence.class == Array
         # result = sentence.join('').gsub(/\d+/, "").split.map{|x| ["word: #{x} size: #{x.size}"]}
-        sentence.map{|x| x.gsub(/\d+/, "")}.each do |se|
-          result << se.split.map{|x| ["word: #{x} , size: #{x.size}"]}
+        sentence.map{|x| x.gsub(/\d+/, "").gsub(/[^a-zA-Z ]/,'')}.each do |se|
+          result << se.split.map{|x| ["{word: #{x} , size: #{x.size}}"]}
         end
       else
-        result = sentence.gsub(/\d+/, "").split.map{|x| ["word: #{x} , size: #{x.size}"]}
+        result = sentence.gsub(/\d+/, "").gsub(/[^a-zA-Z ]/,'').tr(",", "").split.map{|x| ["{word: #{x} , size: #{x.size}}"]}
         # result= sentence.tr("0-9", "").split.map{|x| [x ,x.size]}
       end
     end
